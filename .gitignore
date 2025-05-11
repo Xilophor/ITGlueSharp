@@ -1,0 +1,14 @@
+# Ignore all
+/*
+
+# Add project/root files
+!ITGlueSharp.sln
+!ITGlueSharp
+!.gitignore
+
+# Remove build files
+[Oo]bj
+[Bb]in
+
+# Remove development files
+*.Development.*
