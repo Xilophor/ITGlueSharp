@@ -3,7 +3,7 @@ namespace Xilophor.ITGlueSharp.Model;
 /// <summary>
 ///     An avatar image.
 /// </summary>
-public struct Avatar
+public class Avatar
 {
     /// <summary>
     ///     The base64-encoded image.

@@ -2,7 +2,7 @@ using Xilophor.ITGlueSharp.Enum;
 
 namespace Xilophor.ITGlueSharp.Model;
 
-public struct RelatedItem
+public class RelatedItem
 {
     public long DestinationId { get; set; }
     public ResourceType ResourceType { get; set; }

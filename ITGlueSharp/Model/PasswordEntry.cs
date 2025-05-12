@@ -2,7 +2,7 @@ using System;
 
 namespace Xilophor.ITGlueSharp.Model;
 
-public struct PasswordEntry
+public class PasswordEntry
 {
     public long Id { get; set; }
     public long OrganizationId { get; set; }

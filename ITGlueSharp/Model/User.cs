@@ -6,7 +6,7 @@ namespace Xilophor.ITGlueSharp.Model;
 /// <summary>
 ///     A user account for ITGlue.
 /// </summary>
-public struct User
+public class User
 {
     /// <summary>
     ///     The user's identifier.
@@ -40,7 +40,7 @@ public struct User
     ///     The user's role name.
     /// </summary>
     /// <remarks> Cannot be modified. </remarks>
-    public string Email { get; internal set; }
+    public string? Email { get; internal set; }
     
     /// <summary>
     ///     The user's avatar image. See <see cref="Avatar">Xilophor.ITGlueSharp.Model.Avatar</see>.
@@ -67,10 +67,10 @@ public struct User
     public DateTime? CurrentSignInAt { get; internal set; }
     
     /// <summary>
-    ///     The IP the user signed in from. Will equal <see cref="LastSignInIP"/> if not currently signed in.
+    ///     The IP the user signed in from. Will equal <see cref="LastSignInIp"/> if not currently signed in.
     /// </summary>
     /// <remarks> Can be null. </remarks>
-    public IPAddress? CurrentSignInIP { get; internal set; }
+    public IPAddress? CurrentSignInIp { get; internal set; }
     
     /// <summary>
     ///     The DateTime the user last signed in at.
@@ -82,7 +82,7 @@ public struct User
     ///     The IP the user last signed in from.
     /// </summary>
     /// <remarks> Can be null. </remarks>
-    public IPAddress? LastSignInIP { get; internal set; }
+    public IPAddress? LastSignInIp { get; internal set; }
     
     /// <summary>
     ///     The reputation of the user.

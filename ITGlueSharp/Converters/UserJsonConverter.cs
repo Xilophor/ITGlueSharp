@@ -45,7 +45,7 @@ public class UserJsonConverter : JsonConverter<User>
                         break;
                     case "email": 
                         reader.Read();
-                        user.Email = reader.GetString()!;
+                        user.Email = reader.GetString();
                         break;
                     case "avatar":
                         reader.Read();
@@ -74,7 +74,7 @@ public class UserJsonConverter : JsonConverter<User>
                         break;
                     case "current-sign-in-ip":
                         reader.Read();
-                        user.CurrentSignInIP = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
+                        user.CurrentSignInIp = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
                         break;
                     case "last-sign-in-at":
                         reader.Read();
@@ -82,7 +82,7 @@ public class UserJsonConverter : JsonConverter<User>
                         break;
                     case "last-sign-in-ip":
                         reader.Read();
-                        user.LastSignInIP = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
+                        user.LastSignInIp = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
                         break;
                     case "my-glue":
                         reader.Read();
@@ -123,8 +123,8 @@ public class UpdateUserJsonConverter : UserJsonConverter
         {
             writer.WriteStartObject("avatar");
             
-            writer.WriteString("content", value.Avatar.Value.Content);
-            writer.WriteString("file_name", value.Avatar.Value.FileName);
+            writer.WriteString("content", value.Avatar.Content);
+            writer.WriteString("file_name", value.Avatar.FileName);
             
             writer.WriteEndObject();
         }

@@ -1,22 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Xilophor.ITGlueSharp.Model;
 
 namespace Xilophor.ITGlueSharp.Converters;
 
-internal class FilterJsonConverter : JsonConverter<Filter>
+internal class StringObjectDictionaryJsonConverter : JsonConverter<Dictionary<string, object?>>
 {
-    public override Filter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Dictionary<string, object?> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }
 
-    public override void Write(Utf8JsonWriter writer, Filter value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Dictionary<string, object?> value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
-        foreach (var keyPair in value.Values.Where(keyPair => 
+        foreach (var keyPair in value.Where(keyPair => 
                      options.DefaultIgnoreCondition != JsonIgnoreCondition.WhenWritingNull || keyPair.Value != null))
         {
             writer.WritePropertyName(keyPair.Key);

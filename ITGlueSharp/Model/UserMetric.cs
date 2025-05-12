@@ -2,7 +2,7 @@ using System;
 
 namespace Xilophor.ITGlueSharp.Model;
 
-public struct UserMetric
+public class UserMetric
 {
     public long Id { get; set; }
     public long UserId { get; set; }

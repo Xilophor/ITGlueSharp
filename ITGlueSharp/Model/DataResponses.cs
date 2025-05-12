@@ -2,8 +2,14 @@
 
 namespace Xilophor.ITGlueSharp.Model;
 
-public class DataListResponse<T>
+internal struct DataArrayResponse<T>
 {
     [JsonPropertyName("data")]
     public T[] Data { get; set; }
+}
+
+internal struct DataObjectResponse<T>
+{
+    [JsonPropertyName("data")]
+    public T? Data { get; set; }
 }
