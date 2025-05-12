@@ -4,8 +4,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Xilophor.ITGlueSharp.Model;
 
@@ -39,12 +37,19 @@ public class Users
     /// <param name="pageNumber"> The number of the page to search in. </param>
     /// <param name="pageSize"> The size of the page to search in. </param>
     /// <returns> Returns a list of the users in your account. </returns>
-    public static async Task<User[]> Index(string baseUrl, string apiToken,
-        long? filterId = null, string? filterName = null, string? filterEmail = null, string? filterRoleName = null, long? filterSalesforceId = null, 
-        string? sort = null, int? pageNumber = null, int? pageSize = null)
+    public static async Task<User[]> Index(string baseUrl,
+        string apiToken,
+        long? filterId = null,
+        string? filterName = null,
+        string? filterEmail = null,
+        string? filterRoleName = null,
+        long? filterSalesforceId = null,
+        string? sort = null,
+        int? pageNumber = null,
+        int? pageSize = null)
     {
         HttpClient.BaseAddress = new Uri(baseUrl);
-
+        
         var param = new IndexParams
         {
             filter = new Filter(new Dictionary<string, object?>
@@ -56,15 +61,14 @@ public class Users
             page = new Page(pageNumber, pageSize)
         };
 
-        var request = new HttpRequestMessage(HttpMethod.Get, "users");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/users");
         request.Headers.Add("x-api-key", apiToken);
-        request.Content = new StringContent(
-            JsonSerializer.Serialize(param, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }), 
+        request.Content = new StringContent(JsonSerializer.Serialize(param, Utils.DefaultSerializerOptions), 
             Encoding.UTF8,
             "application/vnd.api+json");
-
-        var response = await HttpClient.SendAsync(request);
         
-        return JsonSerializer.Deserialize<JsonNode>(await response.Content.ReadAsStringAsync())?["data"]?.GetValue<User[]>() ?? [];
+        var response = await HttpClient.SendAsync(request);
+        return JsonSerializer.Deserialize<DataListResponse<User>>(await response.Content.ReadAsStringAsync(),
+            Utils.WithNullDefaultSerializerOptions)?.Data ?? [];
     }
 }

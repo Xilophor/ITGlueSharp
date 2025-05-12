@@ -51,12 +51,14 @@ public struct User
     /// <summary>
     ///     The DateTime the IT Glue invitation was sent to the user.
     /// </summary>
-    public DateTime InvitationSentAt { get; internal set; }
+    /// <remarks> Can be null. </remarks>
+    public DateTime? InvitationSentAt { get; internal set; }
     
     /// <summary>
     ///     The DateTime the IT Glue invitation was accepted.
     /// </summary>
-    public DateTime InvitationAcceptedAt { get; internal set; }
+    /// <remarks> Can be null. </remarks>
+    public DateTime? InvitationAcceptedAt { get; internal set; }
     
     /// <summary>
     ///     The DateTime the user signed in at. Will equal <see cref="LastSignInAt"/> if not currently signed in.

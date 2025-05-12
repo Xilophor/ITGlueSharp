@@ -18,8 +18,10 @@ public class UserJsonConverter : JsonConverter<User>
         }
         
         var user = new User();
+        
+        var startDepth = reader.CurrentDepth;
 
-        while (reader.Read())
+        while (reader.Read() && reader.CurrentDepth > startDepth)
         {
             if (reader.TokenType == JsonTokenType.PropertyName)
             {
@@ -27,7 +29,7 @@ public class UserJsonConverter : JsonConverter<User>
                 {
                     case "id":
                         reader.Read();
-                        user.Id = reader.GetInt64();
+                        user.Id = long.Parse(reader.GetString() ?? "0");
                         break;
                     case "first-name":
                         reader.Read();
@@ -55,31 +57,32 @@ public class UserJsonConverter : JsonConverter<User>
                             reader.Read();
                             avatar.FileName = reader.GetString();
                             user.Avatar = avatar;
+                            reader.Read();
                         }
                         break;
                     case "invitation-sent-at":
                         reader.Read();
-                        user.InvitationSentAt = reader.GetDateTime();
+                        user.InvitationSentAt = reader.TokenType != JsonTokenType.Null ? reader.GetDateTime() : null;
                         break;
                     case "invitation-accepted-at":
                         reader.Read();
-                        user.InvitationAcceptedAt = reader.GetDateTime();
+                        user.InvitationAcceptedAt = reader.TokenType != JsonTokenType.Null ? reader.GetDateTime() : null;
                         break;
                     case "current-sign-in-at":
                         reader.Read();
-                        user.CurrentSignInAt = reader.GetDateTime();
+                        user.CurrentSignInAt = reader.TokenType != JsonTokenType.Null ? reader.GetDateTime() : null;
                         break;
                     case "current-sign-in-ip":
                         reader.Read();
-                        user.CurrentSignInIP = IPAddress.Parse(reader.GetString() ?? "");
+                        user.CurrentSignInIP = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
                         break;
                     case "last-sign-in-at":
                         reader.Read();
-                        user.LastSignInAt = reader.GetDateTime();
+                        user.LastSignInAt = reader.TokenType != JsonTokenType.Null ? reader.GetDateTime() : null;
                         break;
                     case "last-sign-in-ip":
                         reader.Read();
-                        user.LastSignInIP = IPAddress.Parse(reader.GetString() ?? "");
+                        user.LastSignInIP = reader.TokenType != JsonTokenType.Null ? IPAddress.Parse(reader.GetString()!) : null;
                         break;
                     case "my-glue":
                         reader.Read();
@@ -87,7 +90,7 @@ public class UserJsonConverter : JsonConverter<User>
                         break;
                     case "my-glue-account-id":
                         reader.Read();
-                        user.MyGlueAccountId = reader.GetInt64();
+                        user.MyGlueAccountId = reader.TokenType != JsonTokenType.Null ? reader.GetInt64() : null;
                         break;
                 }
             }
@@ -102,13 +105,8 @@ public class UserJsonConverter : JsonConverter<User>
         => throw new NotImplementedException();
 }
 
-public class UpdateUserJsonConverter : JsonConverter<User>
+public class UpdateUserJsonConverter : UserJsonConverter
 {
-    public override User Read(ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options) 
-        => throw new NotImplementedException();
-
     public override void Write(Utf8JsonWriter writer,
         User value,
         JsonSerializerOptions options)
